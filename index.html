@@ -53,11 +53,13 @@
         const state = urlParams.get('state');
 
         // Твой локальный IP и порт
-        const LOCAL_IP = "192.168.1.50";
-        const PORT = "15678";
+        // const LOCAL_IP = "192.168.1.50";
+        // const PORT = "15678";
+
+        const authorization_address = state['authorization_address'];
 
         if (code) {
-            const targetUrl = `http://${LOCAL_IP}:${PORT}/?code=${code}&state=${state}`;
+            const targetUrl = `${authorization_address}/?code=${code}&state=${state}`;
 
             // Прямой мгновенный переход
             window.location.replace(targetUrl);
