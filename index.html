@@ -50,21 +50,32 @@
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
-        const state = urlParams.get('state');
+        const stateRaw = urlParams.get('state'); // Это строка "{...}"
 
-        // Твой локальный IP и порт
-        // const LOCAL_IP = "192.168.1.50";
-        // const PORT = "15678";
+        if (code && stateRaw) {
+            try {
+                // 1. ПРЕВРАЩАЕМ СТРОКУ В ОБЪЕКТ (Это критически важно)
+                const stateObj = JSON.parse(decodeURIComponent(stateRaw));
 
-        const authorization_address = state['authorization_address'];
+                // 2. Достаем адрес из объекта
+                const targetBaseUrl = stateObj.authorization_address;
 
-        if (code) {
-            const targetUrl = `${authorization_address}/?code=${code}&state=${state}`;
+                if (targetBaseUrl) {
+                    // 3. Собираем финальную ссылку
+                    // state передаем обратно как строку, чтобы Godot мог его распарсить
+                    const targetUrl = `${targetBaseUrl}/?code=${code}&state=${encodeURIComponent(stateRaw)}`;
 
-            // Прямой мгновенный переход
-            window.location.replace(targetUrl);
+                    console.log("Переход на:", targetUrl);
+                    window.location.replace(targetUrl);
+                } else {
+                    document.getElementById('status-text').innerText = "Ошибка: в state нет адреса";
+                }
+            } catch (e) {
+                console.error("Ошибка парсинга:", e);
+                document.getElementById('status-text').innerText = "Ошибка обработки данных state";
+            }
         } else {
-            document.body.innerHTML = "<h1>Ошибка: нет данных от Google</h1>";
+            document.getElementById('status-text').innerText = "Ошибка: данные от Google не полные";
         }
     };
 </script>
