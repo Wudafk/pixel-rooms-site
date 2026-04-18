@@ -57,15 +57,18 @@
                 console.log("stateRaw:", stateRaw);
 
                 // 1. ПРЕВРАЩАЕМ СТРОКУ В ОБЪЕКТ (Это критически важно)
-                const stateObj = stateRaw;//JSON.parse(decodeURIComponent(stateRaw));
+                // const stateObj = JSON.parse(decodeURIComponent(stateRaw));
+                const stateObj = JSON.parse(stateRaw);
 
                 // 2. Достаем адрес из объекта
                 const targetBaseUrl = stateObj.registration_address;
+                console.log("targetBaseUrl:", targetBaseUrl);
 
                 if (targetBaseUrl) {
                     // 3. Собираем финальную ссылку
                     // state передаем обратно как строку, чтобы Godot мог его распарсить
-                    const targetUrl = `${targetBaseUrl}/?code=${code}&state=${encodeURIComponent(stateRaw)}`;
+                    // const targetUrl = `${targetBaseUrl}/?code=${code}&state=${encodeURIComponent(stateRaw)}`;
+                    const targetUrl = `${targetBaseUrl}/?code=${code}&state=${stateRaw}`;
 
                     console.log("Переход на:", targetUrl);
                     window.location.replace(targetUrl);
