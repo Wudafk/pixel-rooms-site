@@ -55,9 +55,9 @@
         if (code && stateRaw) {
             try {
                 console.log("stateRaw:", stateRaw);
-                
+
                 // 1. ПРЕВРАЩАЕМ СТРОКУ В ОБЪЕКТ (Это критически важно)
-                const stateObj = JSON.parse(decodeURIComponent(stateRaw));
+                const stateObj = stateRaw;//JSON.parse(decodeURIComponent(stateRaw));
 
                 // 2. Достаем адрес из объекта
                 const targetBaseUrl = stateObj.registration_address;
