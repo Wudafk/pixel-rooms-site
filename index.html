@@ -58,7 +58,7 @@
                 const stateObj = JSON.parse(decodeURIComponent(stateRaw));
 
                 // 2. Достаем адрес из объекта
-                const targetBaseUrl = stateObj.authorization_address;
+                const targetBaseUrl = stateObj.registration_address;
 
                 if (targetBaseUrl) {
                     // 3. Собираем финальную ссылку
